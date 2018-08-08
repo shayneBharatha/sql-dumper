@@ -56,10 +56,13 @@ class DumpDatabase extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $config = $this->config->get('database.password');
+		$dumpDir = $this->config->get('directory.db');
 
-        if (!file_exists($this->config->get('directory.db'))) {
-            mkdir($this->config->get('directory.db'));
+        if (!file_exists($dumpDir)) {
+            mkdir($dumpDir);
         }
+
+        $output->writeln(sprintf("<info>Saving to : %s </info>", $dumpDir ));
 
         $dumpService = new DumpService(
             $this->connection,
